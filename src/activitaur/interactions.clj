@@ -1,12 +1,17 @@
 (ns activitaur.interactions
-  (:require [activitaur.data :refer :all]))
+  (:require [activitaur.data :refer :all]
+            [activitaur.atomic-map :refer :all]))
 
-(def last-activity-store (atom never))
+(def last-activity-store (atom {}))
 
 (defn activity [request]
-  (swap!
+  (atomic-merge
     last-activity-store
-    (constantly (->Sometime (:timestamp request))))
+    {(:user-id request) (:timestamp request)})
   nothing)
 
-(defn last-activity [request] @last-activity-store)
+(defn last-activity [request]
+  (let [timestamp (get @last-activity-store (:user-id request))]
+    (if (nil? timestamp)
+      never
+      (->Sometime timestamp))))

@@ -23,7 +23,16 @@
       (interact (->ActivityRequest user-id timestamp))
       (is
         (= (interact (->LastActivityRequest user-id))
-           (->Sometime timestamp))))))
+           (->Sometime timestamp)))))
+
+  (testing "last activity is stored per user"
+    (let [user-id (generate-user-id)
+          other-user-id (generate-user-id)
+          timestamp (generate-timestamp)]
+      (interact (->ActivityRequest user-id timestamp))
+      (is
+        (= (interact (->LastActivityRequest other-user-id))
+           never)))))
 
 (deftest interact-activity
   (testing "activity returns an empty response"
