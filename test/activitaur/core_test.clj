@@ -14,19 +14,19 @@
 (deftest interact-last-activity
   (testing "last activity is never by default"
     (is
-      (= (interact (->LastActivity (generate-user-id)))
+      (= (interact (->LastActivityRequest (generate-user-id)))
          never)))
 
   (testing "last activity is the timestamp passed to activity"
     (let [user-id (generate-user-id)
           timestamp (generate-timestamp)]
-      (interact (->Activity user-id timestamp))
+      (interact (->ActivityRequest user-id timestamp))
       (is
-        (= (interact (->LastActivity user-id))
+        (= (interact (->LastActivityRequest user-id))
            (->Sometime timestamp))))))
 
 (deftest interact-activity
   (testing "activity returns an empty response"
     (is
-      (= (interact (->Activity (generate-user-id) (generate-timestamp)))
+      (= (interact (->ActivityRequest (generate-user-id) (generate-timestamp)))
          nothing))))

@@ -6,8 +6,8 @@
 (defprotocol RequestModel
   (interact [request]))
 
-(extend activitaur.data.LastActivity
+(extend activitaur.data.LastActivityRequest
   RequestModel {:interact activitaur.interactions/last-activity})
 
-(extend activitaur.data.Activity
+(extend activitaur.data.ActivityRequest
   RequestModel {:interact activitaur.interactions/activity})

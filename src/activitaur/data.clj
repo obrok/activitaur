@@ -1,8 +1,8 @@
 (ns activitaur.data)
 
-(defrecord Activity [user-id timestamp])
+(defrecord ActivityRequest [user-id timestamp])
 
-(defrecord LastActivity [user-id])
+(defrecord LastActivityRequest [user-id])
 
 (defrecord Never [])
 
