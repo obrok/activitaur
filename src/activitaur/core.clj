@@ -1,15 +1,13 @@
 (ns activitaur.core
-  (:gen-class))
-
-(def nothing :nothing)
+  (:gen-class)
+  (:require [activitaur.interactions :refer :all]
+            [activitaur.data :refer :all]))
 
 (defprotocol RequestModel
   (interact [request]))
 
-(def never :never)
+(extend activitaur.data.LastActivity
+  RequestModel {:interact activitaur.interactions/last-activity})
 
-(defrecord LastActivity [user-id]
-  RequestModel (interact [this] never))
-
-(defrecord Activity [user-id]
-  RequestModel (interact [this] nothing))
+(extend activitaur.data.Activity
+  RequestModel {:interact activitaur.interactions/activity})
