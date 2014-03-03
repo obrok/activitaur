@@ -11,7 +11,6 @@
   nothing)
 
 (defn last-activity [request]
-  (let [timestamp (get @last-activity-store (:user-id request))]
-    (if (nil? timestamp)
-      never
-      (->Sometime timestamp))))
+  (->> (:user-id request)
+       (get @last-activity-store)
+       ->time-response))

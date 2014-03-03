@@ -8,8 +8,15 @@
 
 (defrecord Sometime [timestamp])
 
-(defrecord Nothing [])
-
 (def never (->Never))
+
+(defprotocol TimeResponsable
+  (->time-response [this]))
+
+(extend-protocol TimeResponsable
+  nil (->time-response [_] never)
+  java.util.Date (->time-response [this] (->Sometime this)))
+
+(defrecord Nothing [])
 
 (def nothing (->Nothing))
